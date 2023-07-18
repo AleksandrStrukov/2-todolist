@@ -6,3 +6,18 @@
 .App > div {
   margin-right: 50px;
 }
+
+.error {
+  border: deeppink 2px solid;
+}
+
+.error-message {
+  color: pink;
+}
+
+.active-filter {
+  background-color: yellow;
+}
+.is-done {
+  opacity: 38%;
+}
