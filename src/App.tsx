@@ -30,8 +30,17 @@ function App() {
 
             setTaskObj({...taskObj});
         }
+    }
 
+    function changeTaskTitle(taskId: string, newValue: string, toDoListId: string) {
+        let tasks = taskObj[toDoListId];
 
+        let task = tasks.find(t => t.id === taskId);
+        if (task) {
+            task.title = newValue;
+
+            setTaskObj({...taskObj});
+        }
     }
 
     function addTask(title: string, toDoListId: string) {
@@ -127,6 +136,7 @@ type TasksStType = {
                         changeTaskStatus={changeStatus}
                         filter={tl.filter}
                         removeToDoList={removeToDoList}
+                        changeTaskTitle={changeTaskTitle}
                     />
                 })
             }

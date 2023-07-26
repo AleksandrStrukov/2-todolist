@@ -1,6 +1,7 @@
 import React, {ChangeEvent} from 'react';
 import {FilterValuesType} from "./App";
 import {AddItemForm} from "./AddItemForm";
+import {EditabelSpan} from "./EditabelSpan";
 
 export type TaskType = {
     id: string
@@ -15,6 +16,7 @@ export type PropsType = {
     changeFilter: (value: FilterValuesType, toDoListId: string) => void
     addTask: (title: string, toDoListId: string) => void
     changeTaskStatus: (taskId: string, isDone: boolean, toDoListId: string) => void
+    changeTaskTitle: (taskId: string, newTitle: string, toDoListId: string) => void
     filter: FilterValuesType
     id: string
     removeToDoList: (toDoListId: string) => void
@@ -43,16 +45,7 @@ export function Todolist(props: PropsType) {
             <button onClick={removeToDoList}>XXX</button>
         </h3>
         <AddItemForm addItem={addTask}/>
-        {/*<div>*/}
-        {/*    <input value={newTaskTitle}*/}
-        {/*           onChange={onChangeHandler}*/}
-        {/*           onKeyPress={onKeyPressHandler}*/}
-        {/*           className={error ? 'error' : ''}*/}
-        {/*    />*/}
-        {/*    <button onClick={addTask}>+*/}
-        {/*    </button>*/}
-        {/*    {error && <div className='error-message'>{error}</div>}*/}
-        {/*</div>*/}
+
         <ul>
             {
                 props.tasks.map(r => {
@@ -62,11 +55,14 @@ export function Todolist(props: PropsType) {
                     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
                         props.changeTaskStatus(r.id, e.currentTarget.checked, props.id)
                     }
+                    const onChangeTitleHandler = (newValue:string) => {
+                       props.changeTaskTitle(r.id, newValue, props.id)
+                    }
                     return <li key={r.id} className={r.isDone ? 'is-done' : ''}>
                         <input type="checkbox"
                                onChange={onChangeHandler}
                                checked={r.isDone}/>
-                        <span>{r.title}</span>
+                        <EditabelSpan title ={r.title} onChange={onChangeTitleHandler}/>
                         <button onClick={onRemoveHandler}>X
                         </button>
                     </li>
@@ -86,6 +82,5 @@ export function Todolist(props: PropsType) {
         </div>
     </div>
 }
-
 
 
