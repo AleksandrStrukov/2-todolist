@@ -78,7 +78,13 @@ let removeToDoList = (ToDoListId: string)=> {
     delete taskObj[ToDoListId];
     setTaskObj({...taskObj});
 }
-
+function changeToDoListTitl (id: string, newTitle:string){
+    const todolist = toDoList.find(tl=>tl.id ===id);
+    if (todolist) {
+        todolist.title = newTitle;
+        setToDoLists([...toDoList])
+    }
+}
 type TasksStType = {
     [key: string]:Array<TaskType>
 }
@@ -137,6 +143,7 @@ type TasksStType = {
                         filter={tl.filter}
                         removeToDoList={removeToDoList}
                         changeTaskTitle={changeTaskTitle}
+                        changeToDoListTitl={changeToDoListTitl}
                     />
                 })
             }
