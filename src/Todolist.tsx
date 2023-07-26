@@ -1,5 +1,6 @@
-import React, {ChangeEvent, useState, KeyboardEvent, ChangeEventHandler} from 'react';
-import App, {FilterValuesType} from "./App";
+import React, {ChangeEvent} from 'react';
+import {FilterValuesType} from "./App";
+import {AddItemForm} from "./AddItemForm";
 
 export type TaskType = {
     id: string
@@ -20,27 +21,6 @@ export type PropsType = {
 }
 
 export function Todolist(props: PropsType) {
-    const [newTaskTitle, setNewTaskTitle] = useState('');
-    let [error, setError] = useState('');
-
-    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setNewTaskTitle(e.currentTarget.value)
-    }
-    const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        setError('');
-        if (e.charCode === 13) {
-            addTask();
-        }
-    }
-    const addTask = () => {
-        if (newTaskTitle.trim() !== '') {
-            props.addTask(newTaskTitle.trim(), props.id);
-            setNewTaskTitle('');
-        } else {
-            setError('message is not right');
-        }
-
-    }
     const onAllClickHandler = () => {
         props.changeFilter('all', props.id)
     }
@@ -53,20 +33,26 @@ export function Todolist(props: PropsType) {
     const removeToDoList = () => {
         props.removeToDoList(props.id);
     }
+
+    const addTask = (title: string) => {
+        props.addTask(title, props.id);
+    }
+
     return <div>
         <h3>{props.title}
             <button onClick={removeToDoList}>XXX</button>
         </h3>
-        <div>
-            <input value={newTaskTitle}
-                   onChange={onChangeHandler}
-                   onKeyPress={onKeyPressHandler}
-                   className={error ? 'error' : ''}
-            />
-            <button onClick={addTask}>+
-            </button>
-            {error && <div className='error-message'>{error}</div>}
-        </div>
+        <AddItemForm addItem={addTask}/>
+        {/*<div>*/}
+        {/*    <input value={newTaskTitle}*/}
+        {/*           onChange={onChangeHandler}*/}
+        {/*           onKeyPress={onKeyPressHandler}*/}
+        {/*           className={error ? 'error' : ''}*/}
+        {/*    />*/}
+        {/*    <button onClick={addTask}>+*/}
+        {/*    </button>*/}
+        {/*    {error && <div className='error-message'>{error}</div>}*/}
+        {/*</div>*/}
         <ul>
             {
                 props.tasks.map(r => {
@@ -100,3 +86,6 @@ export function Todolist(props: PropsType) {
         </div>
     </div>
 }
+
+
+
