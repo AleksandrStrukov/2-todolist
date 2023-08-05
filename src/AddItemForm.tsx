@@ -1,9 +1,11 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
+import {Button, TextField} from "@mui/material";
 
 type AddItemFormPropsType = {
     addItem: (title: string) => void
 
 }
+
 export function AddItemForm(props: AddItemFormPropsType) {
     const [newTaskTitle, setNewTaskTitle] = useState('');
     let [error, setError] = useState('');
@@ -17,7 +19,7 @@ export function AddItemForm(props: AddItemFormPropsType) {
         }
     }
     const addTask = () => {
-                if (newTaskTitle.trim() !== '') {
+        if (newTaskTitle.trim() !== '') {
             props.addItem(newTaskTitle.trim());
             setNewTaskTitle('');
         } else {
@@ -28,13 +30,16 @@ export function AddItemForm(props: AddItemFormPropsType) {
 
 
     return <div>
-        <input value={newTaskTitle}
-               onChange={onChangeHandler}
-               onKeyPress={onKeyPressHandler}
-               className={error ? 'error' : ''}
+        <TextField value={newTaskTitle}
+                   variant={"outlined"}
+                   label={'Type value'}
+                   onChange={onChangeHandler}
+                   onKeyPress={onKeyPressHandler}
+                   error={!!error}
+                   helperText={error}
         />
-        <button onClick={addTask}>+
-        </button>
-        {error && <div className='error-message'>{error}</div>}
+        {/*<button onClick={addTask}>+</button>*/}
+        <Button onClick={addTask} variant={"outlined"} color={"inherit"}>+</Button>
+
     </div>
 }

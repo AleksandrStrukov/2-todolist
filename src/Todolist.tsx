@@ -2,6 +2,8 @@ import React, {ChangeEvent} from 'react';
 import {FilterValuesType} from "./App";
 import {AddItemForm} from "./AddItemForm";
 import {EditabelSpan} from "./EditabelSpan";
+import {Button, Grid, IconButton} from "@mui/material";
+import {CheckBox, Delete} from "@mui/icons-material";
 
 export type TaskType = {
     id: string
@@ -21,6 +23,7 @@ export type PropsType = {
     id: string
     removeToDoList: (toDoListId: string) => void
     changeToDoListTitl:(id: string, newTitle:string)=>void
+
 }
 
 export function Todolist(props: PropsType) {
@@ -46,9 +49,14 @@ export function Todolist(props: PropsType) {
 
     return <div>
         <h3> <EditabelSpan title={props.title} onChange={changeToDoListTitle}/>
-            <button onClick={removeToDoList}>XXX</button>
+            {/*<button onClick={removeToDoList}>XXX</button>*/}
+            <IconButton onClick={removeToDoList}>
+                <Delete />
+            </IconButton>
         </h3>
+
         <AddItemForm addItem={addTask}/>
+
 
         <ul>
             {
@@ -57,33 +65,36 @@ export function Todolist(props: PropsType) {
                         props.removeTask(r.id, props.id)
                     }
                     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-                        props.changeTaskStatus(r.id, e.currentTarget.checked, props.id)
+                        props.changeTaskStatus(r.id, e.target.checked, props.id)
                     }
                     const onChangeTitleHandler = (newValue:string) => {
                        props.changeTaskTitle(r.id, newValue, props.id)
                     }
-                    return <li key={r.id} className={r.isDone ? 'is-done' : ''}>
-                        <input type="checkbox"
-                               onChange={onChangeHandler}
-                               checked={r.isDone}/>
-                        <EditabelSpan title ={r.title} onChange={onChangeTitleHandler}/>
-                        <button onClick={onRemoveHandler}>X
-                        </button>
-                    </li>
+                    return <div key={r.id} className={r.isDone ? 'is-done' : ''}>
+                        <input type='checkbox' checked={r.isDone} onChange={onChangeHandler}/>
+                        <EditabelSpan title ={r.title}
+                                      onChange={onChangeTitleHandler}/>
+                        {/*<button onClick={onRemoveHandler}>X</button>*/}
+                        <IconButton onClick={onRemoveHandler}>
+                            <Delete />
+                        </IconButton>
+                    </div>
                 })
+
             }
         </ul>
         <div>
-            <button className={props.filter === 'all' ? "active-filter" : ''}
+            <Button variant={props.filter === 'all' ? "contained" : 'text'}
                     onClick={onAllClickHandler}>All
-            </button>
-            <button className={props.filter === 'active' ? "active-filter" : ''}
+            </Button>
+            <Button color={"primary"} variant={props.filter === 'active' ? "contained" : 'text'}
                     onClick={onActiveClickHandler}>Active
-            </button>
-            <button className={props.filter === 'completed' ? "active-filter" : ''}
+            </Button>
+            <Button color={"secondary"} className={props.filter === 'completed' ? "contained" : 'text'}
                     onClick={onCompletedClickHandler}>Completed
-            </button>
+            </Button>
         </div>
+
     </div>
 }
 

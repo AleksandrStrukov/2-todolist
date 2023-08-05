@@ -1,37 +1,37 @@
-.App {
-  padding: 30px;
-  display: flex;
-  background-color: #03fdfd;
-  align-items: center;
-  justify-content: center;
-  font-family: "Berlin Sans FB"
-}
+/*.App {*/
+/*  padding: 30px;*/
+/*  display: flex;*/
+/*  background-color: #03fdfd;*/
+/*  align-items: center;*/
+/*  justify-content: center;*/
+/*  font-family: "Berlin Sans FB"*/
+/*}*/
 
-.App > div {
-  margin-right: 50px;
-}
+/*.App > div {*/
+/*  margin-right: 50px;*/
+/*}*/
 
-.error {
-  border: deeppink 2px solid;
-}
+/*.error {*/
+/*  border: deeppink 2px solid;*/
+/*}*/
 
-.error-message {
-  color: pink;
-}
+/*.error-message {*/
+/*  color: pink;*/
+/*}*/
 
-.active-filter {
-  background-color: yellow;
-  border-radius: 15px;
-}
-.is-done {
-  opacity: 38%;
-}
-button {
-  border-radius: 15px;
-  color: red;
-  background-color: green;
-  font-family: "Berlin Sans FB";
-}
-input{
-  border-radius: 5px;
-}
+/*.active-filter {*/
+/*  background-color: yellow;*/
+/*  border-radius: 15px;*/
+/*}*/
+/*.is-done {*/
+/*  opacity: 38%;*/
+/*}*/
+/*button {*/
+/*  border-radius: 15px;*/
+/*  color: red;*/
+/*  background-color: green;*/
+/*  font-family: "Berlin Sans FB";*/
+/*}*/
+/*input{*/
+/*  border-radius: 5px;*/
+/*}*/

@@ -3,6 +3,8 @@ import './App.css';
 import {TaskType, Todolist} from './Todolist';
 import {v1} from "uuid";
 import {AddItemForm} from "./AddItemForm";
+import {CheckBox, Menu} from "@mui/icons-material";
+import {AppBar, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@mui/material";
 
 export type FilterValuesType = 'all' | 'completed' | 'active';
 type ToDoListType = {
@@ -17,7 +19,7 @@ function App() {
         let tasks = taskObj[toDoListId];
 
         let filtredTasks = tasks.filter(r => r.id !== id)
-        taskObj[toDoListId]=filtredTasks
+        taskObj[toDoListId] = filtredTasks
         setTaskObj({...taskObj});
     }
 
@@ -72,22 +74,24 @@ function App() {
             {id: toDoListId1, title: 'What to learn', filter: 'all'},
             {id: toDOListId2, title: 'What to buy', filter: 'all'}
         ]);
-let removeToDoList = (ToDoListId: string)=> {
-    let filtredToDoList = toDoList.filter(tl=>tl.id !== ToDoListId);
-    setToDoLists(filtredToDoList);
-    delete taskObj[ToDoListId];
-    setTaskObj({...taskObj});
-}
-function changeToDoListTitl (id: string, newTitle:string){
-    const todolist = toDoList.find(tl=>tl.id ===id);
-    if (todolist) {
-        todolist.title = newTitle;
-        setToDoLists([...toDoList])
+    let removeToDoList = (ToDoListId: string) => {
+        let filtredToDoList = toDoList.filter(tl => tl.id !== ToDoListId);
+        setToDoLists(filtredToDoList);
+        delete taskObj[ToDoListId];
+        setTaskObj({...taskObj});
     }
-}
-type TasksStType = {
-    [key: string]:Array<TaskType>
-}
+
+    function changeToDoListTitl(id: string, newTitle: string) {
+        const todolist = toDoList.find(tl => tl.id === id);
+        if (todolist) {
+            todolist.title = newTitle;
+            setToDoLists([...toDoList])
+        }
+    }
+
+    type TasksStType = {
+        [key: string]: Array<TaskType>
+    }
     let [taskObj, setTaskObj] = useState<TasksStType>({
         [toDoListId1]: [
             {id: v1(), title: "HTML&CSS", isDone: true},
@@ -103,52 +107,72 @@ type TasksStType = {
 
     })
 
-    function addToDoList(title:string) {
-    let newTtoDoList : ToDoListType = {
-        id: v1(),
-        title: title,
-        filter: 'all'
+    function addToDoList(title: string) {
+        let newTtoDoList: ToDoListType = {
+            id: v1(),
+            title: title,
+            filter: 'all'
 
-    }
-    setToDoLists([newTtoDoList,...toDoList]);
-        setTaskObj({...taskObj,
-        [newTtoDoList.id]:[]
+        }
+        setToDoLists([newTtoDoList, ...toDoList]);
+        setTaskObj({
+            ...taskObj,
+            [newTtoDoList.id]: []
         })
     }
 
     return (
         <div className="App">
-            <AddItemForm addItem={addToDoList} />
+            <AppBar position="static">
+                <Toolbar variant="dense">
+                    <IconButton edge="start" color="inherit" aria-label="menu">
+                        <Menu/>
+                    </IconButton>
+                    <Typography variant="h6" color="inherit">
+                        ToDoList
+                    </Typography>
+                </Toolbar>
+            </AppBar>
+            <Container fixed>
+                <Grid container padding={'16px'}>
+                    <AddItemForm addItem={addToDoList}/>
+                </Grid>
+                <Grid container spacing={5}>
+                    {
+                        toDoList.map((tl) => {
 
-            {
-                toDoList.map((tl) => {
+                            let tasksForTodolist = taskObj[tl.id];
+                            if (tl.filter === 'completed') {
+                                tasksForTodolist = tasksForTodolist.filter(t => t.isDone === true);
+                            }
+                            if (tl.filter === 'active') {
+                                tasksForTodolist = tasksForTodolist.filter(t => t.isDone === false);
+                            }
 
-                    let tasksForTodolist = taskObj[tl.id];
-                    if (tl.filter === 'completed') {
-                        tasksForTodolist = tasksForTodolist.filter(t => t.isDone === true);
+                            return <Grid item>
+                                <Paper  style={{padding: '10px'}}>
+                            <Todolist
+                                key={tl.id}
+                                id={tl.id}
+                                title={tl.title}
+                                tasks={tasksForTodolist}
+                                removeTask={removeTask}
+                                changeFilter={changeFilter}
+                                addTask={addTask}
+                                changeTaskStatus={changeStatus}
+                                filter={tl.filter}
+                                removeToDoList={removeToDoList}
+                                changeTaskTitle={changeTaskTitle}
+
+                                changeToDoListTitl={changeToDoListTitl}
+
+                            />
+                                </Paper>
+                                </Grid>
+                        })
                     }
-                    if (tl.filter === 'active') {
-                        tasksForTodolist = tasksForTodolist.filter(t => t.isDone === false);
-                    }
-
-                    return <Todolist
-                        key={tl.id}
-                        id={tl.id}
-                        title={tl.title}
-                        tasks={tasksForTodolist}
-                        removeTask={removeTask}
-                        changeFilter={changeFilter}
-                        addTask={addTask}
-                        changeTaskStatus={changeStatus}
-                        filter={tl.filter}
-                        removeToDoList={removeToDoList}
-                        changeTaskTitle={changeTaskTitle}
-                        changeToDoListTitl={changeToDoListTitl}
-                    />
-                })
-            }
-
-
+                </Grid>
+            </Container>
         </div>
     );
 }
