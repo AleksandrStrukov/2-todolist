@@ -7,7 +7,7 @@ import {CheckBox, Menu} from "@mui/icons-material";
 import {AppBar, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@mui/material";
 
 export type FilterValuesType = 'all' | 'completed' | 'active';
-type ToDoListType = {
+export type ToDoListType = {
     id: string
     title: string
     filter: FilterValuesType
