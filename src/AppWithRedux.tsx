@@ -22,7 +22,7 @@ export type ToDoListType = {
 
 }
 
-function AppWithReducers() {
+function AppWithRedux() {
     function removeTask(id: string, toDoListId: string) {
         dispatchToTaskReducer(removeTaskAC(id, toDoListId))
     }
@@ -147,4 +147,4 @@ function AppWithReducers() {
     );
 }
 
-export default AppWithReducers;
+export default AppWithRedux;
