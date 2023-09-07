@@ -14,6 +14,6 @@ export const store = createStore(rootReducer);
 //     tasks: TasksStateType
 // }
 
-type AppRootState = ReturnType<typeof rootReducer>
+export type AppRootState = ReturnType<typeof rootReducer>
 // @ts-ignore
 window.store = store;

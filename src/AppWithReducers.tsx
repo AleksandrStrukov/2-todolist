@@ -12,7 +12,16 @@ import {
     removeTodolistAC,
     todolistsReducer
 } from "./State/todolists-reducer";
-import {addTasksAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from "./State/tasks-reducer";
+import {
+    addTasksAC,
+    changeTaskStatusAC,
+    changeTaskTitleAC,
+    removeTaskAC,
+    tasksReducer,
+    TasksStateType
+} from "./State/tasks-reducer";
+import {useDispatch, useSelector} from "react-redux";
+import {AppRootState} from "./State/store";
 
 export type FilterValuesType = 'all' | 'completed' | 'active';
 export type ToDoListType = {
@@ -24,71 +33,55 @@ export type ToDoListType = {
 
 function AppWithReducers() {
     function removeTask(id: string, toDoListId: string) {
-        dispatchToTaskReducer(removeTaskAC(id, toDoListId))
+        dispatch(removeTaskAC(id, toDoListId))
     }
 
     function changeStatus(taskId: string, isDone: boolean, toDoListId: string) {
-        dispatchToTaskReducer(changeTaskStatusAC(taskId, isDone, toDoListId));
+        dispatch(changeTaskStatusAC(taskId, isDone, toDoListId));
     }
 
 
     function changeTaskTitle(taskId: string, newValue: string, toDoListId: string) {
-        dispatchToTaskReducer(changeTaskTitleAC(taskId, newValue, toDoListId))
+        dispatch(changeTaskTitleAC(taskId, newValue, toDoListId))
 
     }
 
     function addTask(title: string, toDoListId: string) {
-        dispatchToTaskReducer(addTasksAC(title, toDoListId));
+        dispatch(addTasksAC(title, toDoListId));
 
     }
 
 
     function changeFilter(value: FilterValuesType, toDoListId: string) {
         const action = changeTodolistFilterAC(toDoListId, value);
-        dispatchToDoListsReducer(action);
+        dispatch(action);
     }
 
     let toDoListId1 = v1();
     let toDOListId2 = v1();
+    const dispatch = useDispatch();
+    const todolists = useSelector<AppRootState, Array<ToDoListType>>(state => state.todolists)
+    const tasks = useSelector<AppRootState, TasksStateType>(state => state.tasks)
 
-    let [toDoList, dispatchToDoListsReducer] =
-        useReducer(todolistsReducer, [
-            {id: toDoListId1, title: 'What to learn', filter: 'all'},
-            {id: toDOListId2, title: 'What to buy', filter: 'all'}
-        ]);
     let removeToDoList = (ToDoListId: string) => {
         const action = removeTodolistAC(ToDoListId);
-        dispatchToDoListsReducer(action);
-        dispatchToTaskReducer(action);
+        dispatch(action);
+
     }
 
     function changeToDoListTitl(id: string, newTitle: string) {
         const action = changeTodolistTitleAC(id, newTitle);
-        dispatchToDoListsReducer(action)
+        dispatch(action)
     }
 
     type TasksStType = {
         [key: string]: Array<TaskType>
     }
-    let [taskObj, dispatchToTaskReducer] = useReducer(tasksReducer, {
-        [toDoListId1]: [
-            {id: v1(), title: "HTML&CSS", isDone: true},
-            {id: v1(), title: "JS", isDone: true},
-            {id: v1(), title: "ReactJS", isDone: false},
-            {id: v1(), title: "Redux", isDone: false}
-        ],
-        [toDOListId2]: [
-            {id: v1(), title: "Bananas", isDone: true},
-            {id: v1(), title: "Cola", isDone: true},
-            {id: v1(), title: "Bread", isDone: false}
-        ]
 
-    })
 
     function addToDoList(title: string) {
         const action = addTodolistAC(title);
-        dispatchToDoListsReducer(action);
-        dispatchToTaskReducer(action);
+        dispatch(action);
     }
 
     return (
@@ -109,9 +102,9 @@ function AppWithReducers() {
                 </Grid>
                 <Grid container spacing={5}>
                     {
-                        toDoList.map((tl) => {
+                        tasks.map((tl) => {
 
-                            let tasksForTodolist = taskObj[tl.id];
+                            let tasksForTodolist = tasks[tl.id];
                             if (tl.filter === 'completed') {
                                 tasksForTodolist = tasksForTodolist.filter(t => t.isDone === true);
                             }

@@ -36,11 +36,15 @@ export const changeTodolistTitleAC = (id: string, title: string): ChangeTodoList
 export const changeTodolistFilterAC = (id: string, filter: FilterValuesType): ChangeTodoListFilterActionType => {
     return {type: 'CHANGE-TODOLIST-FILTER', id: id, filter: filter}
 }
-
+export let toDoListId1 = v1();
+export let toDOListId2 = v1();
 
 let newName='Lopik'
-
-export const todolistsReducer = (state: Array<ToDoListType>, action: ActionsTypes): Array<ToDoListType> => {
+const initialState:Array<ToDoListType> = [
+    {id: toDoListId1, title: 'What to learn', filter: 'all'},
+    {id: toDOListId2, title: 'What to buy', filter: 'all'}
+];
+export const todolistsReducer = (state: Array<ToDoListType> = initialState, action: ActionsTypes): Array<ToDoListType> => {
     switch (action.type) {
         case 'REMOVE-TODOLIST': {
             return state.filter(tl => tl.id !== action.id)
@@ -64,7 +68,7 @@ export const todolistsReducer = (state: Array<ToDoListType>, action: ActionsType
         }
 
         default:
-            throw new Error("I don't know you")
+           return state;
     }
 
 }

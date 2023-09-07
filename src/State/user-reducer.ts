@@ -27,7 +27,7 @@ export const userReducer = (state: StateType, action: any): StateType => {
             }
 
         default:
-            throw new Error("I don't know you")
+           return state;
     }
 
 }
