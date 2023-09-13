@@ -41,9 +41,7 @@ export let toDOListId2 = v1();
 
 // let newName='Lopik'
 const initialState:Array<ToDoListType> = [
-    {id: toDoListId1, title: 'What to learn', filter: 'all'},
-    {id: toDOListId2, title: 'What to buy', filter: 'all'}
-];
+    ];
 export const todolistsReducer = (state: Array<ToDoListType> = initialState, action: ActionsTypes): Array<ToDoListType> => {
     switch (action.type) {
         case 'REMOVE-TODOLIST': {

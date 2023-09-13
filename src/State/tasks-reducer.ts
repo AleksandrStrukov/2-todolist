@@ -49,17 +49,17 @@ export const changeTaskTitleAC = (taskId: string, title: string, todolistId: str
 }
 
 const initialState: TasksStateType ={
-    [toDoListId1]: [
-        {id: v1(), title: "HTML&CSS", isDone: true},
-        {id: v1(), title: "JS", isDone: true},
-        {id: v1(), title: "ReactJS", isDone: false},
-        {id: v1(), title: "Redux", isDone: false}
-    ],
-    [toDOListId2]: [
-        {id: v1(), title: "Bananas", isDone: true},
-        {id: v1(), title: "Cola", isDone: true},
-        {id: v1(), title: "Bread", isDone: false}
-    ]
+    // [toDoListId1]: [
+    //     {id: v1(), title: "HTML&CSS", isDone: true},
+    //     {id: v1(), title: "JS", isDone: true},
+    //     {id: v1(), title: "ReactJS", isDone: false},
+    //     {id: v1(), title: "Redux", isDone: false}
+    // ],
+    // [toDOListId2]: [
+    //     {id: v1(), title: "Bananas", isDone: true},
+    //     {id: v1(), title: "Cola", isDone: true},
+    //     {id: v1(), title: "Bread", isDone: false}
+    // ]
 
 }
 export const tasksReducer = (state: TasksStateType = initialState, action: ActionType): TasksStateType => {

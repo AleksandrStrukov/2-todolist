@@ -6,7 +6,7 @@ type AddItemFormPropsType = {
 
 }
 
-export function AddItemForm(props: AddItemFormPropsType) {
+export const AddItemForm =  React.memo( (props: AddItemFormPropsType) => {
     const [newTaskTitle, setNewTaskTitle] = useState('');
     let [error, setError] = useState('');
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -45,4 +45,4 @@ export function AddItemForm(props: AddItemFormPropsType) {
         <Button onClick={addTask} variant={"outlined"} color={"inherit"}>+</Button>
 
     </div>
-}
+})
