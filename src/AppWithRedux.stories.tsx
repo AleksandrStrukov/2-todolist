@@ -1,5 +1,5 @@
 import React from "react";
-import AppWithRedux from "./AppWithRedux";
+import AppWithRedux from "./appWithRedux/AppWithRedux";
 import {store} from "./State/store";
 import {Provider} from "react-redux";
 import {ReduxStoreProviderDecorator} from "./stories/ReduxStoreProviderDecorator";

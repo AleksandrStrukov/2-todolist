@@ -1,6 +1,6 @@
 import React, {ChangeEvent, useCallback} from 'react';
 import {FilterValuesType} from "./App/App";
-import {AddItemForm} from "./AddItemForm";
+import {AddItemForm} from "./AddItemForm/AddItemForm";
 import {EditabelSpan} from "./EditabelSpan";
 import {Button, Grid, IconButton} from "@mui/material";
 import {CheckBox, Delete} from "@mui/icons-material";

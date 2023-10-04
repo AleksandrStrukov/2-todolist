@@ -1,5 +1,6 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
 import {Button, TextField} from "@mui/material";
+import {useAddItemForm} from "./hooks/useAddItemForm";
 
 type AddItemFormPropsType = {
     addItem: (title: string) => void
@@ -7,30 +8,7 @@ type AddItemFormPropsType = {
 }
 
 export const AddItemForm =  React.memo( (props: AddItemFormPropsType) => {
-    const [newTaskTitle, setNewTaskTitle] = useState('');
-    let [error, setError] = useState('');
-    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setNewTaskTitle(e.currentTarget.value)
-    }
-    const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        if (error !== null) {
-            setError(' ')
-        }
-
-        if (e.charCode === 13) {
-            addTask();
-        }
-    }
-    const addTask = () => {
-        if (newTaskTitle.trim() !== '') {
-            props.addItem(newTaskTitle.trim());
-            setNewTaskTitle('');
-        } else {
-            setError('message is not right');
-        }
-
-    }
-
+const{newTaskTitle,onKeyPressHandler,onChangeHandler,addTask,error}=useAddItemForm(props.addItem)
 
     return <div>
         <TextField value={newTaskTitle}

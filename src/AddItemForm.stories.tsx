@@ -1,4 +1,4 @@
-import {AddItemForm} from "./AddItemForm";
+import {AddItemForm} from "./AddItemForm/AddItemForm";
 import React from "react";
 
 export default {

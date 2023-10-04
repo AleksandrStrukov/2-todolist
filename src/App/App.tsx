@@ -2,7 +2,7 @@ import React from 'react';
 import '../App.css';
 import {TaskType, Todolist} from '../Todolist';
 import {v1} from "uuid";
-import {AddItemForm} from "../AddItemForm";
+import {AddItemForm} from "../AddItemForm/AddItemForm";
 import {Menu} from "@mui/icons-material";
 import {AppBar, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@mui/material";
 import {useTasks} from "./Hooks/UseTasks";
@@ -22,9 +22,9 @@ export type TasksStType = {
 
 function App() {
 
-    let {taskObj, setTaskObj, addTask, changeTaskTitle, changeStatus, removeTask, onTodoListRemoved} = useTasks();
+    let {tasks, setTasks, addTask, changeTaskTitle, changeStatus, removeTask, onTodoListRemoved, addStateForNewToDoList} = useTasks();
 
-    let {toDoList, changeFilter,removeToDoList,changeToDoListTitl,addToDoList} = useToDoLists(taskObj,setTaskObj,onTodoListRemoved)
+    let {toDoList, changeFilter,removeToDoList,changeToDoListTitl, addToDoList} = useToDoLists(onTodoListRemoved,addStateForNewToDoList)
 
 
     return (
@@ -47,7 +47,7 @@ function App() {
                     {
                         toDoList.map((tl) => {
 
-                            let tasksForTodolist = taskObj[tl.id];
+                            let tasksForTodolist = tasks[tl.id];
                             if (tl.filter === 'completed') {
                                 tasksForTodolist = tasksForTodolist.filter(t => t.isDone === true);
                             }
